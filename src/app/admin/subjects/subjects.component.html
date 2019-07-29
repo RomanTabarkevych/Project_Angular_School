@@ -1,0 +1,42 @@
+<div class="example-header">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+  <a class="addSubject">Додати новий предмет</a>
+
+<div class="example-container mat-elevation-z8">
+  <mat-table [dataSource]="subjectsList" matSort>
+
+        <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <!-- <ng-container matColumnDef="position">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+        </ng-container> -->
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="subjectName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Назва предмету </mat-header-cell>
+            <mat-cell *matCellDef="let subject"> {{subject.subjectName}} </mat-cell>
+        </ng-container>
+
+        <!-- Info Column -->
+        <ng-container matColumnDef="subjectDescription">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Додаткова інформація </mat-header-cell>
+            <mat-cell *matCellDef="let subject"> {{subject.subjectDescription}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="subject-row" [cdkDetailRow]="row" [cdkDetailRowTpl]="tpl">
+        </mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+<ng-template class="editSubject" #tpl let-subject>
+    <div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
+        Редагувати даний предмет
+    </div>
+</ng-template>
